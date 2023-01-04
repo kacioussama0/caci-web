@@ -16,6 +16,7 @@ Auth::routes();
 
 Route::prefix('admin')->group(function () {
     Route::view('profile','admin.profile');
+    Route::resource('users',\App\Http\Controllers\UserController::class);
     Route::resource('semesters',\App\Http\Controllers\SemesterController::class);
     Route::resource('modules',\App\Http\Controllers\ModuleController::class);
     Route::resource('lessons',\App\Http\Controllers\LessonController::class);

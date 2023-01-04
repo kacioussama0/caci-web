@@ -24,6 +24,13 @@
                 </li>
 
                 <li
+                    class="sidebar-item {{request()->is('admin') ? "active" : '' }}">
+                    <a href="{{route('users.index')}}" class='sidebar-link'>
+                        <span>Utilisateurs</span>
+                    </a>
+                </li>
+
+                <li
                     class="sidebar-item {{request()->is('semeters') ? "active" : '' }}">
                     <a href="{{route('semesters.index')}}" class='sidebar-link'>
                         <span>Semestres</span>
