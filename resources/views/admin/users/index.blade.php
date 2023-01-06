@@ -22,6 +22,7 @@
                     <th>Nom et Prénom</th>
                     <th>Email</th>
                     <th>Image</th>
+                    <th>Type</th>
                     <th>Crée</th>
                     <th>Procedures</th>
                 </tr>
@@ -36,10 +37,11 @@
                        <td>{{$user -> name}}</td>
                         <td>{{$user -> email}}</td>
                         <td>
-                           <img src="{{!File::exists(public_path('storage/' . $user->avatar)) ?
+                           <img src="{{File::exists(public_path('storage/' . $user->avatar)) ?
                             asset('storage/' . $user -> avatar) : asset('imgs/logo.svg')}}" alt="" style="width: 80px ; height:80px" class="rounded-circle">
                        </td>
 
+                       <td>{{$user -> type}}</td>
                        <td>{{$user -> created_at}}</td>
                        <td>
                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">

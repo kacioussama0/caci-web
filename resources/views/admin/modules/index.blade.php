@@ -32,19 +32,21 @@
                            <td>{{$module->semester->title}}</td>
                            <td>{{count($module->lessons)}}</td>
                            <td>
-                               <img src="{{asset('storage/' . $module->thumbnail)}}" alt="" class="img-fluid">
+                               <img src="{{asset('storage/' . $module->thumbnail)}}" alt="" style="width: 100px" class="img-fluid">
                            </td>
                            <td>{{$module->user->name}}</td>
                            <td>{{$module->created_at}}</td>
                            <td>{{$module->updated_at}}</td>
 
                            <td>
-                               <a href="{{route('modules.edit',$module)}}" class="btn btn-success me-2">Editer</a>
-                               <form id="destroy-form" action="{{route('modules.destroy',$module)}}" method="POST" onsubmit="return confirm('Tu es Sur ?')">
-                                   @csrf
-                                   @method('DELETE')
-                                   <button type="submit" class="btn btn-danger">Supprimer</button>
-                               </form>
+                              <div class="d-flex">
+                                  <a href="{{route('modules.edit',$module)}}" class="btn btn-success me-2">Editer</a>
+                                  <form id="destroy-form" action="{{route('modules.destroy',$module)}}" method="POST" onsubmit="return confirm('Tu es Sur ?')">
+                                      @csrf
+                                      @method('DELETE')
+                                      <button type="submit" class="btn btn-danger">Supprimer</button>
+                                  </form>
+                              </div>
                            </td>
                        </tr>
 

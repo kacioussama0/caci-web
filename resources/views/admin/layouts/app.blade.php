@@ -67,6 +67,6 @@
 
     <!-- End Content -->
 
-
+@yield('scripts')
 
 @include('admin.layouts.footer')

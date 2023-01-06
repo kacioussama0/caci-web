@@ -17,37 +17,42 @@
                 <li class="sidebar-title">List</li>
 
                 <li
-                    class="sidebar-item {{request()->is('admin') ? "active" : '' }}">
-                    <a href="" class='sidebar-link'>
+                    class="sidebar-item {{request()->is('admin/profile') ? "active" : '' }}">
+                    <a href="{{route('admin/profile')}}" class='sidebar-link'>
+                        <i class="bi bi-person-lines-fill"></i>
                         <span>Profile</span>
                     </a>
                 </li>
 
                 <li
-                    class="sidebar-item {{request()->is('admin') ? "active" : '' }}">
+                    class="sidebar-item {{request()->is('admin/users*') ? "active" : '' }}">
                     <a href="{{route('users.index')}}" class='sidebar-link'>
+                        <i class="bi bi-people-fill"></i>
                         <span>Utilisateurs</span>
                     </a>
                 </li>
 
                 <li
-                    class="sidebar-item {{request()->is('semeters') ? "active" : '' }}">
+                    class="sidebar-item {{request()->is('admin/semesters*') ? "active" : '' }}">
                     <a href="{{route('semesters.index')}}" class='sidebar-link'>
+                        <i class="bi bi-bar-chart-steps"></i>
                         <span>Semestres</span>
                     </a>
                 </li>
 
                 <li
-                    class="sidebar-item {{request()->is('modules') ? "active" : '' }}">
+                    class="sidebar-item {{request()->is('admin/modules*') ? "active" : '' }}">
                     <a href="{{route('modules.index')}}" class='sidebar-link'>
+                        <i class="bi bi-journals"></i>
                         <span>Modules</span>
                     </a>
                 </li>
 
 
                 <li
-                    class="sidebar-item {{request()->is('lessons') ? "active" : '' }}">
+                    class="sidebar-item {{request()->is('admin/lessons*') ? "active" : '' }}">
                     <a href="{{route('lessons.index')}}" class='sidebar-link'>
+                        <i class="bi bi-file-earmark-spreadsheet"></i>
                         <span>Leçons</span>
                     </a>
                 </li>

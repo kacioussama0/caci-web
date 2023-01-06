@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rules\File;
 
 class UserController extends Controller
 {
@@ -112,4 +113,83 @@ class UserController extends Controller
         }
         return  abort(404);
     }
+
+
+    public function updateProfile(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|min:3',
+            'email' => 'required|email|unique:users,email,' . auth()->id(),
+        ]);
+
+        Auth::user()->update($request->all());
+
+        return redirect()->to('admin/profile')->with([
+            'success' => __('forms.edited-successfully')
+        ]);
+    }
+
+    public function updatePassword(Request $request)
+    {
+
+        $request->validate([
+            'actual_password' => 'required',
+            'new_password' => 'required|confirmed',
+        ]);
+
+        $user = Auth::user();
+
+
+        if (!Hash::check($request->actual_password, $user->password)) {
+            return redirect()->back()->with([
+                'failed' => __('forms.current-pass-incorrect')
+            ]);
+        }
+
+        $user->password = bcrypt($request->new_password);
+
+        $user->save();
+
+        return redirect()->back()->with([
+            'success' => __('forms.pass-chan-success')
+        ]);
+
+    }
+
+    public function updateImage(Request $request)
+    {
+        $request -> validate([
+            'image'=> [
+                File::types([
+                    'jpg','gif','png','webp'
+                ])->max(1024 * 4)
+            ]
+        ]);
+
+        if(!empty($request->file('image'))) {
+            $image = $request->file('image')->store('avatar','public');
+
+
+            $user = Auth::user();
+
+            $user -> avatar = $image;
+
+            $user -> save();
+
+            return redirect()->back()->with([
+                'success' => __('forms.pic-chan-success')
+            ]);
+
+        }
+
+        return  redirect()->back();
+
+    }
+
+    public function profile()
+    {
+        return view('admin.profile')->with('user', User::where('id', Auth::id())->first());
+    }
+
+
 }

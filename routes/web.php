@@ -15,7 +15,10 @@ Auth::routes();
 
 
 Route::prefix('admin')->group(function () {
-    Route::view('profile','admin.profile');
+    Route::get('profile',[\App\Http\Controllers\UserController::class,'profile'])->name('admin/profile');
+    Route::post('updateProfile',[\App\Http\Controllers\UserController::class,'updateProfile'])->name('updateProfile');
+    Route::post('updatePassword',[\App\Http\Controllers\UserController::class,'updatePassword'])->name('updatePassword');
+    Route::patch('updateImage',[\App\Http\Controllers\UserController::class,'updateImage'])->name('updateImage');
     Route::resource('users',\App\Http\Controllers\UserController::class);
     Route::resource('semesters',\App\Http\Controllers\SemesterController::class);
     Route::resource('modules',\App\Http\Controllers\ModuleController::class);

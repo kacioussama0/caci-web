@@ -1,43 +1,5 @@
 @extends('admin.layouts.app')
 
-
-@section('scripts')
-    <script src="{{ asset('tinymce/tinymce.min.js') }}"></script>
-    <script src="{{ asset('tinymce/jquery.tinymce.min.js') }}"></script>
-    <script>
-
-            tinymce.init({
-                selector: 'textarea.tinymce',
-                @if(config('app.locale') == 'ar')
-                language: 'ar',
-                directionality: 'rtl',
-                @endif
-                height: 200,
-                plugins: [
-                    'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-                    'searchreplace wordcount visualblocks visualchars code fullscreen',
-                    'insertdatetime media nonbreaking save table contextmenu directionality',
-                    'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc help'
-                ],
-                toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | forecolor backcolor emoticons | print preview',
-                file_picker_callback (callback, value, meta) {
-                    let x = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth
-                    let y = window.innerHeight|| document.documentElement.clientHeight|| document.getElementsByTagName('body')[0].clientHeight
-                    tinymce.activeEditor.windowManager.openUrl({
-                        url : '/file-manager/tinymce5',
-                        title : 'Laravel File manager',
-                        width : x * 0.8,
-                        height : y * 0.8,
-                        onMessage: (api, message) => {
-                            callback(message.content, { text: message.text })
-                        }
-                    })
-                }
-            });
-
-    </script>
-@endsection
-
 @section('content')
 
     <div class="container">
@@ -55,7 +17,7 @@
 
             <div class="mb-3">
                 <label for="content" class="form-label">Contenu</label>
-                <textarea name="content" id="content" class="form-control tinymce">{!! old('content') !!}</textarea>
+                <textarea name="content" id="content" class="form-control">{!! old('content') !!}</textarea>
                 @error('content')
                 <span class="text-danger">{{$message}}</span>
                 @enderror
@@ -86,4 +48,52 @@
 
     </div>
 
+@endsection
+
+@section('scripts')
+    <script src="{{asset('ckeditor/ckeditor.js')}}"></script>
+    <script>
+        const watchdog = new CKSource.EditorWatchdog();
+
+        window.watchdog = watchdog;
+
+        watchdog.setCreator( ( element, config ) => {
+            return CKSource.Editor
+                .create( element, config )
+                .then( editor => {
+
+
+
+
+                    return editor;
+                } )
+        } );
+
+        watchdog.setDestructor( editor => {
+
+
+
+            return editor.destroy();
+        } );
+
+        watchdog.on( 'error', handleError );
+
+        watchdog
+            .create( document.querySelector( '#content' ), {
+
+                licenseKey: '',
+
+
+
+            } )
+            .catch( handleError );
+
+        function handleError( error ) {
+            console.error( 'Oops, something went wrong!' );
+            console.error( 'Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:' );
+            console.warn( 'Build id: ps84xgvebphl-dsvl5yemqhny' );
+            console.error( error );
+        }
+
+    </script>
 @endsection
