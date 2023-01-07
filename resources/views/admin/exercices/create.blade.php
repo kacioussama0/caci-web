@@ -1,10 +1,5 @@
 @extends('admin.layouts.app')
 
-@section('styles')
-    <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
-
-@endsection
-
 @section('scripts')
     <script src="{{ asset('tinymce/tinymce.min.js') }}"></script>
     <script src="{{ asset('tinymce/jquery.tinymce.min.js') }}"></script>
@@ -40,25 +35,6 @@
         });
 
     </script>
-
-    <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
-
-    <script>
-        const attachment = document.querySelector('input[id=attachments]');
-
-        const pond = FilePond.create(attachment);
-
-        FilePond.setOptions({
-            server: {
-                url: '/uploadAttachment',
-                headers:{
-                    'X-CSRF-TOKEN': '{{csrf_token()}}'
-                }
-            }
-        })
-    </script>
-
-
 @endsection
 
 @section('content')
@@ -99,12 +75,11 @@
                 @enderror
             </div>
 
-            <div class="mb-5">
-                <label for="attachments" class="form-label">Attachments</label>
-                <input type="file" id="attachments" multiple>
-            </div>
+            <label for="semester" class="form-label">Attachments</label>
 
-            <button type="submit" class="btn btn-primary w-100">Ajouter Leçon</button>
+            <livewire:multiple-upload/>
+
+            <button class="btn btn-primary w-100">Ajouter Leçon</button>
 
         </form>
 
@@ -114,5 +89,3 @@
     </div>
 
 @endsection
-
-

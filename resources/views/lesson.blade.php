@@ -18,7 +18,8 @@
             </div>
 
             <div class="col-md-4">
-                <div class="row">
+                <h3 class="mb-5">Autres Lesson</h3>
+                <div class="row gy-4">
 
                     @foreach($lesson->module->lessons as $lesson)
 

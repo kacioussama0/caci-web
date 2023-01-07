@@ -15,14 +15,16 @@
     <!-- End Meta Tags -->
 
     <title>{{config('app.name')}} | @yield('title')</title>
+    <link rel="icon" href="{{asset('imgs/logo.svg')}}">
 
     <!-- Start Links Tags  -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{asset('css/admin.rtl.css')}}">
     <link rel="stylesheet" href="{{asset('css/admin.css')}}">
     <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}">
+    <!-- End Links Tags  -->
 
-
+    @yield('styles')
 
 <body>
 

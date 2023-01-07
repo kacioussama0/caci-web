@@ -9,7 +9,7 @@ $semesters = \App\Models\Semester::all();
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{config('app.name')}} |  @yield('title')</title>
-
+    <link rel="icon" href="{{asset('imgs/logo.svg')}}">
     <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}">
     <link rel="stylesheet" href="{{asset('fontawesome/css/all.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/master.css')}}">
@@ -64,12 +64,22 @@ $semesters = \App\Models\Semester::all();
                @auth
                 <ul class="navbar-nav  ms-auto">
 
-                    <li class="nav-item">
-                        <form action="{{route('logout')}}" method="POST">
-                            @csrf
-                            <button type="submit" class="nav-link btn btn-warning text-light px-4 rounded-3 border-0" href="{{route('logout')}}">Deconnexion</button>
-                        </form>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link  dropdown-toggle  btn btn-warning text-light rounded-3 border-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{auth()->user()->name}}</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{{route('admin/profile')}}">Profile</a>
+
+                            <form action="{{route('logout')}}" method="POST">
+                                @csrf
+                                <button type="submit" class="dropdown-item" href="{{route('logout')}}">Deconnexion</button>
+                            </form>
+
+                        </div>
                     </li>
+
+
+
+
                 </ul>
             @else
                 <ul class="navbar-nav  ms-auto">

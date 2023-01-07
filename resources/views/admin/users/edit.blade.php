@@ -9,7 +9,7 @@
     <form action="{{route('users.update',$user)}}" method="POST" enctype="multipart/form-data">
 
         @csrf
-
+        @method('PUT')
         <div class="mb-3">
             <label for="name">Nom et Prénom</label>
             <input type="text" name="name" id="name" class="form-control" value="{{$user -> name}}">

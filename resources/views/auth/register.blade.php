@@ -28,6 +28,7 @@
                             </div>
                         </div>
 
+
                         <div class="row mb-3">
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
 
@@ -40,6 +41,19 @@
                                     </span>
                                 @enderror
                             </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="type" class="col-md-4 col-form-label text-md-end">Type</label>
+                            <div class="col-md-6">
+                            <select name="type" id="type" class="form-select">
+                                <option value="Teacher">Enseignant</option>
+                                <option value="Student">Elève</option>
+                            </select>
+                            </div>
+                            @error('type')
+                            <span class="text-danger">{{$message}}</span>
+                            @enderror
                         </div>
 
                         <div class="row mb-3">

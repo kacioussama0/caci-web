@@ -57,6 +57,15 @@
                     </a>
                 </li>
 
+                <li
+                    class="sidebar-item {{request()->is('admin/exercices*') ? "active" : '' }}">
+                    <a href="{{route('exercices.index')}}" class='sidebar-link'>
+                        <i class="bi bi-activity"></i>
+                        <span>Exercices</span>
+                    </a>
+                </li>
+
+
 
 
             </ul>
