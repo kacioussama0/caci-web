@@ -1,14 +1,14 @@
 @extends('admin.layouts.app')
-
+@section('title','Ajouter Module')
 @section('content')
 
-    <div class="container">
+    <div class="container-fluid">
 
         <form action="{{route('modules.store')}}" method="POST" class="mb-5" enctype="multipart/form-data">
 
             @csrf
             <div class="mb-3">
-                <label for="title" class="form-label">Titre</label>
+                <label for="title" class="form-label">Titre <span class="text-danger">*</span></label>
                 <input type="text" name="title" id="title" class="form-control" value="{{old('title')}}">
                 @error('title')
                     <span class="text-danger">{{$message}}</span>
@@ -24,7 +24,7 @@
             </div>
 
             <div class="mb-3">
-                <label for="semester" class="form-label">Semestre</label>
+                <label for="semester" class="form-label">Semestre <span class="text-danger">*</span></label>
 
                 <select name="semester" id="semester" class="form-select">
                     <option value="" selected disabled>Selectioner Semstre</option>
@@ -40,7 +40,7 @@
 
 
             <div class="mb-3">
-                <label for="thumbnail" class="form-label">Image</label>
+                <label for="thumbnail" class="form-label">Image <span class="text-danger">*</span></label>
                 <input type="file" name="thumbnail" id="thumbnail" class="form-control" value="{{old('thumbnail')}}">
 
                 @error('thumbnail')
@@ -49,7 +49,7 @@
             </div>
 
             <div class="mb-3">
-                <label for="coefficient" class="form-label">Coefficient</label>
+                <label for="coefficient" class="form-label">Coefficient <span class="text-danger">*</span></label>
                 <input type="number" name="coefficient" id="coefficient" class="form-control" value="{{old('coefficient')}}">
 
                 @error('coefficient')

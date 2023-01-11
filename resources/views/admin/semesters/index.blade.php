@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="container">
+    <div class="container-fluid">
 
         <form action="{{route('semesters.store')}}" method="POST" class="mb-5">
             @csrf
@@ -21,7 +21,7 @@
         @include('layouts.success')
 
         <div class="table-responsive">
-            <table class="table table-primary">
+            <table class="table table-primary text-center align-middle">
                 <thead>
                     <tr>
                         <th>Nom</th>
@@ -43,7 +43,7 @@
                            <td>{{$semester->created_at}}</td>
                            <td>{{$semester->updated_at}}</td>
 
-                           <td class="d-flex">
+                           <td class="d-flex justify-content-center">
                                <a href="{{route('semesters.edit',$semester)}}" class="btn btn-success me-2">Editer</a>
                                <form id="destroy-form" action="{{route('semesters.destroy',$semester)}}" method="POST" onsubmit="return confirm('Tu es Sur ?')">
                                    @csrf

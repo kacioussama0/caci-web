@@ -1,15 +1,15 @@
 @extends('admin.layouts.app')
-
+@section('title','Modules')
 @section('content')
 
-    <div class="container">
+    <div class="container-fluid">
 
 
         <a href="{{route('modules.create')}}" class="btn btn-lg btn-primary mb-5">Ajouter Module</a>
 
         @include('layouts.success')
 
-        <div class="table-responsive">
+        <div class="table-responsive text-center align-middle">
             <table class="table table-primary">
                 <thead>
                     <tr>
@@ -39,7 +39,7 @@
                            <td>{{$module->updated_at}}</td>
 
                            <td>
-                              <div class="d-flex">
+                              <div class="d-flex justify-content-center">
                                   <a href="{{route('modules.edit',$module)}}" class="btn btn-success me-2">Editer</a>
                                   <form id="destroy-form" action="{{route('modules.destroy',$module)}}" method="POST" onsubmit="return confirm('Tu es Sur ?')">
                                       @csrf

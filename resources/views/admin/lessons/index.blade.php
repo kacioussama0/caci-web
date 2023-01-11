@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="container">
+    <div class="container-fluid">
 
 
         <a href="{{route('lessons.create')}}" class="btn btn-lg btn-primary mb-5">Ajouter Leçon</a>
@@ -10,7 +10,7 @@
         @include('layouts.success')
 
         <div class="table-responsive">
-            <table class="table table-primary">
+            <table class="table table-primary text-center align-middle">
                 <thead>
                     <tr>
                         <th>Nom</th>

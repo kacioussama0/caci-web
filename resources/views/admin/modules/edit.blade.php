@@ -1,8 +1,8 @@
 @extends('admin.layouts.app')
-
+@section('title','Modifier Module')
 @section('content')
 
-    <div class="container">
+    <div class="container-fluid">
 
         <form action="{{route('modules.update',$module)}}" method="POST" class="mb-5" enctype="multipart/form-data">
 

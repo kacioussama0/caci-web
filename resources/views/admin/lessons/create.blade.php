@@ -12,10 +12,6 @@
 
         tinymce.init({
             selector: 'textarea.tinymce',
-            @if(config('app.locale') == 'ar')
-            language: 'ar',
-            directionality: 'rtl',
-            @endif
             height: 200,
             plugins: [
                 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
@@ -50,12 +46,17 @@
 
         FilePond.setOptions({
             server: {
-                url: '/uploadAttachment',
-                headers:{
-                    'X-CSRF-TOKEN': '{{csrf_token()}}'
+                url: '/filepond/api',
+                process: '/process',
+                revert: '/process',
+                patch: "?patch=",
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 }
-            }
-        })
+            },
+
+            lang: 'fr_FR'
+        });
     </script>
 
 

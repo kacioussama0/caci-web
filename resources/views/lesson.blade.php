@@ -1,6 +1,9 @@
 @extends('layouts.caci')
 @section('title',$lesson->title)
 
+@section('styles')
+    @livewireStyles
+@endsection
 
 @section('content')
 
@@ -42,6 +45,10 @@
             </div>
 
 
+            <div class="col-md-8">
+                <livewire:comment/>
+            </div>
+
         </div>
 
 
@@ -49,4 +56,8 @@
 
 </section>
 
+@endsection
+
+@section('scripts')
+    @livewireScripts
 @endsection

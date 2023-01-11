@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+    <div class="row justify-content-center align-items-center vh-100">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
 
@@ -67,6 +67,11 @@
                     </form>
                 </div>
             </div>
+        </div>
+        <div class="col-md-6">
+
+            <img src="{{asset('imgs/login.svg')}}" alt="">
+
         </div>
     </div>
 </div>
