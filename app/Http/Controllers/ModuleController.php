@@ -13,8 +13,11 @@ class ModuleController extends Controller
 
     public function index()
     {
-        $modules = Module::latest()->get();
-        return view('admin.modules.index',compact('modules'));
+        if(count(Semester::all())) {
+            $modules = Module::latest()->get();
+            return view('admin.modules.index',compact('modules'));
+        }
+        return redirect()->to('admin/semesters');
     }
 
 
@@ -107,7 +110,15 @@ class ModuleController extends Controller
      */
     public function destroy(Module $module)
     {
+
+        if(count($module->lessons)) {
+            return redirect()->to('admin/modules')->with([
+                'failed' => 'Il ne peut pas être supprimé le module car il contient des leçons'
+            ]);
+        }
+
         $module->delete();
+
         return redirect()->to('admin/modules')->with(
             ['success' => 'Module supprimer avec succès']
         );

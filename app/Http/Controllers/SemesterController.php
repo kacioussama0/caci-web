@@ -12,6 +12,9 @@ class SemesterController extends Controller
 
     public function index()
     {
+
+
+
         $semesters = Semester::all();
         return view('admin.semesters.index',compact('semesters'));
     }
@@ -69,6 +72,14 @@ class SemesterController extends Controller
 
     public function destroy(Semester $semester)
     {
+
+        if(count($semester->modules)) {
+            return redirect()->to('admin/semesters')->with([
+                'failed' => 'Il ne peut pas être supprimé le module car il contient des leçons'
+            ]);
+        }
+
+
         $semester->delete();
         return redirect()->to('admin/semesters')->with(
             ['success' => 'Semestre supprimer avec succès']

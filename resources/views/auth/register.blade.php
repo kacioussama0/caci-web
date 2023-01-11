@@ -1,4 +1,4 @@
-@extends('layouts.caci')
+@extends('layouts.app')
 
 @section('content')
 <div class="container vh-100 position-relative">

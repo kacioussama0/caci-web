@@ -1,13 +1,12 @@
-@extends('layouts.caci')
+@extends('layouts.app')
 @section('title',$module->title)
-
 
 @section('content')
 
-<section class="module ">
+<section class="module">
 
     <div class="header mb-3  d-flex flex-column justify-content-center align-items-center position-relative" style="background-image: url('{{asset('storage/' . $module->thumbnail)}}')">
-        <h1 class="display-5 text-center text-white mb-3 bg-opacity-50">{{$module->title}}</h1>
+        <h1 class="display-4 text-center text-white bg-opacity-50">{{$module->title}}</h1>
         <p class="container text-white text-center">{{$module->description}}</p>
     </div>
 
@@ -18,7 +17,7 @@
 
            @foreach($module->lessons as $lesson)
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="card">
                         <div class="card-body vstack gap-4">
                             <img src="{{asset('storage/' . $module -> thumbnail)}}" alt="{{$module->title}}" class="img-fluid" style="height: 250px">

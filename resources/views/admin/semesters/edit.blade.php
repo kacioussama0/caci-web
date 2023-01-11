@@ -19,43 +19,49 @@
         </form>
 
 
-        <div class="table-responsive">
-            <table class="table table-primary">
-                <thead>
+        <x-forms.table :object="$semesters">
+
+
+            <x-slot name="thead">
+
+                <tr>
+                    <th>Nom</th>
+                    <th>Modules</th>
+                    <th>Créer Par</th>
+                    <th>Créer </th>
+                    <th>Modifier</th>
+                    <th>Procedures</th>
+                </tr>
+            </x-slot>
+
+
+            <x-slot name="tbody">
+
+                @foreach($semesters as $semester)
+
                     <tr>
-                        <th>Nom</th>
-                        <th>Modules</th>
-                        <th>Créer Par</th>
-                        <th>Créer </th>
-                        <th>Modifier</th>
-                        <th>Procedures</th>
+                        <td>{{$semester->title}}</td>
+                        <td>{{count($semester->modules)}}</td>
+                        <td>{{$semester->user->name}}</td>
+                        <td>{{$semester->created_at}}</td>
+                        <td>{{$semester->updated_at}}</td>
+
+                        <td class="d-flex">
+                            <a href="{{route('semesters.edit',$semester)}}" class="btn btn-success me-2">Editer</a>
+                            <form id="destroy-form" action="{{route('semesters.destroy',$semester)}}" method="POST" onsubmit="return confirm('Tu es Sur ?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                            </form>
+                        </td>
                     </tr>
-                </thead>
 
-                <tbody>
-                    @foreach($semesters as $semester)
+                @endforeach
 
-                       <tr>
-                           <td>{{$semester->title}}</td>
-                           <td>{{count($semester->modules)}}</td>
-                           <td>{{$semester->user->name}}</td>
-                           <td>{{$semester->created_at}}</td>
-                           <td>{{$semester->updated_at}}</td>
+            </x-slot>
 
-                           <td class="d-flex">
-                               <a href="{{route('semesters.edit',$semester)}}" class="btn btn-success me-2">Editer</a>
-                               <form id="destroy-form" action="{{route('semesters.destroy',$semester)}}" method="POST" onsubmit="return confirm('Tu es Sur ?')">
-                                   @csrf
-                                   @method('DELETE')
-                                   <button type="submit" class="btn btn-danger">Supprimer</button>
-                               </form>
-                           </td>
-                       </tr>
+        </x-forms.table>
 
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
 
     </div>
 

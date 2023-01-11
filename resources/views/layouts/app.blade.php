@@ -1,116 +1,131 @@
+@php
+    $semesters = \App\Models\Semester::all();
+@endphp
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="fr">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="{{ asset('vendor/file-manager/css/file-manager.css') }}">
-    <script src="{{ asset('vendor/file-manager/js/file-manager.js') }}"></script>
-
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{config('app.name')}} |  @yield('title')</title>
+    <link rel="icon" href="{{asset('imgs/logo.svg')}}">
+    <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}">
+    <link rel="stylesheet" href="{{asset('fontawesome/css/all.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/master.css')}}">
     @yield('styles')
-
-    <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-
-    @yield('scripts')
-
 </head>
+
 <body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
+<!-- Start Header -->
 
-
-
-
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ __('Semestres') }}
-                            </a>
-
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{route('semesters.index')}}">
-                                    {{__('Tableux')}}
-                                </a>
-
-                            </div>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('modules.index') }}">{{ __('Modules') }}</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('lessons.index') }}">{{ __('Leçons') }}</a>
-                        </li>
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Connexion') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('S\'inscrire') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Deconnexion') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
+<header>
+    <nav class="navbar navbar-expand-lg py-3">
+        <div class="container">
+            <a class="navbar-brand" href="/" class="d-flex align-items-center">
+                <img src="{{asset('imgs/logo.svg')}}" alt="" style="width: 30px" />
+                <span class="text-primary fw-bold">CACI WEB</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa-regular fa-bars fa-1x text-warning"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="navbar-nav mx-auto ">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Accueil</a>
+                    </li>
 
 
+                    <li class="nav-item dropdown">
+                        <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Semestres</a>
+                        <div class="dropdown-menu">
+                            @foreach($semesters as $semester)
+                                <a class="dropdown-item user-select-none fs-5 fw-bolder text-uppercase" >{{$semester->title}}</a>
+                                @foreach($semester->modules as $key => $module)
+                                    <a class="dropdown-item" href="{{url('modules/' . $module->title)}}">{{$key+1 . ' - ' .$module->title}}</a>
 
-                        @endguest
+                                @endforeach
+                            @endforeach
 
-                    </ul>
-                </div>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Modules</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Tutorials</a>
+                    </li>
+
             </div>
-        </nav>
 
-        <main class="py-4">
-            @yield('content')
-        </main>
+
+            @auth
+                <ul class="navbar-nav  ms-auto d-none d-lg-block">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link  dropdown-toggle  btn btn-warning text-light rounded-3 border-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa-light fa-user me-1"></i>{{auth()->user()->name}}</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{{route('admin/profile')}}">Profile</a>
+
+                            <form action="{{route('logout')}}" method="POST">
+                                @csrf
+                                <button type="submit" class="dropdown-item" href="{{route('logout')}}">Deconnexion</button>
+                            </form>
+
+                        </div>
+                    </li>
+                </ul>
+            @else
+                <ul class="navbar-nav  ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active me-2" href="{{route('login')}}">Connexion</a>
+                    </li>
+
+                    <li class="nav-item ">
+                        <a class="nav-link active btn btn-warning text-light px-4 rounded-3 border-0" href="{{route('register')}}">S'inscrire</a>
+                    </li>
+                </ul>
+
+            @endauth
+
+        </div>
+    </nav>
+
+
+</header>
+
+<!-- End Header -->
+
+@yield('content')
+
+
+<footer class="bg-primary py-4">
+
+    <div class="container text-white">
+        <div class="d-flex justify-content-between align-items-center flex-column flex-md-row vstack gap-3">
+            <img src="{{asset('imgs/logo.svg')}}" alt="" class="img-fluid" style="width: 40px">
+
+            <div>
+                <a href="https://www.facebook.com/donttryhacking.me0101" class="link-light"><i class="fa-brands fa-facebook fa-2x me-2"></i></a>
+                <a href="https://github.com/kacioussama0" class="link-light" target="_blank"><i class="fa-brands fa-github fa-2x"></i></a>
+            </div>
+
+            <p class="mb-0 text-center">Tous les droits sont réservés Caci Web &copy; {{date('Y')}}</p>
+
+        </div>
     </div>
+
+
+
+
+</footer>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+<script src="{{asset('fontawesome/js/all.min.js')}}"></script>
+@yield('scripts')
 </body>
 </html>

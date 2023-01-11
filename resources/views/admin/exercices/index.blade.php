@@ -1,50 +1,50 @@
 @extends('admin.layouts.app')
-
+@section('title','Exercices')
 @section('content')
 
-    <div class="container">
+    <div class="container-fluid">
 
 
-        <a href="{{route('lessons.create')}}" class="btn btn-lg btn-primary mb-5">Ajouter Leçon</a>
+        <a href="{{route('exercices.create')}}" class="btn btn-lg btn-primary mb-5">Ajouter Exercice</a>
 
-        @include('layouts.success')
+        <x-forms.table :object="$exercices">
 
-        <div class="table-responsive">
-            <table class="table table-primary">
-                <thead>
+            <x-slot name="thead">
+
+                <th>Nom</th>
+                <th>Module</th>
+                <th>Créer Par</th>
+                <th>Créer </th>
+                <th>Modifier</th>
+                <th>Procedures</th>
+
+            </x-slot>
+
+            <x-slot name="tbody">
+
+                @foreach($exercices as $exercice)
+
                     <tr>
-                        <th>Nom</th>
-                        <th>Module</th>
-                        <th>Créer Par</th>
-                        <th>Créer </th>
-                        <th>Modifier</th>
-                        <th>Procedures</th>
+                        <td>{{$exercice->title}}</td>
+                        <td>{{$exercice->module->title}}</td>
+                        <td>{{$exercice->user->name}}</td>
+                        <td>{{$exercice->created_at}}</td>
+                        <td>{{$exercice->updated_at}}</td>
+                        <td>
+                            <a href="{{route('exercices.edit',$exercice)}}" class="btn btn-success me-2">Editer</a>
+                            <form id="destroy-form" action="{{route('exercices.destroy',$exercice)}}" method="POST" onsubmit="return confirm('Tu es Sur ?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                            </form>
+                        </td>
                     </tr>
-                </thead>
 
-                <tbody>
-                    @foreach($lessons as $lesson)
+                @endforeach
 
-                       <tr>
-                           <td>{{$lesson->title}}</td>
-                           <td>{{$lesson->module->title}}</td>
-                           <td>{{$lesson->user->name}}</td>
-                           <td>{{$lesson->created_at}}</td>
-                           <td>{{$lesson->updated_at}}</td>
-                           <td>
-                               <a href="{{route('lessons.edit',$lesson)}}" class="btn btn-success me-2">Editer</a>
-                               <form id="destroy-form" action="{{route('lessons.destroy',$lesson)}}" method="POST" onsubmit="return confirm('Tu es Sur ?')">
-                                   @csrf
-                                   @method('DELETE')
-                                   <button type="submit" class="btn btn-danger">Supprimer</button>
-                               </form>
-                           </td>
-                       </tr>
+            </x-slot>
 
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+        </x-forms.table>
 
     </div>
 

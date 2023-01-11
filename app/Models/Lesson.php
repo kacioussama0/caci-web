@@ -30,4 +30,8 @@ class Lesson extends Model
         return $this->belongsTo(Module::class);
     }
 
+    public function exercices() {
+        return $this->hasMany(Exercice::class);
+    }
+
 }

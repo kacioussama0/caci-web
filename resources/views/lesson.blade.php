@@ -1,4 +1,4 @@
-@extends('layouts.caci')
+@extends('layouts.app')
 @section('title',$lesson->title)
 
 @section('styles')
