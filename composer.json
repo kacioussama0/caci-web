@@ -8,6 +8,7 @@
         "php": "^8.0.2",
         "alexusmai/laravel-file-manager": "^3.0",
         "doctrine/dbal": "^3.5",
+        "enyo/dropzone": "^5.9",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.7",
         "intervention/imagecache": "^2.5",

@@ -1,9 +1,5 @@
 @extends('admin.layouts.app')
 
-@section('styles')
-    <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
-
-@endsection
 
 @section('scripts')
     <script src="{{ asset('tinymce/tinymce.min.js') }}"></script>
@@ -37,26 +33,22 @@
 
     </script>
 
-    <script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
+
 
     <script>
-        const attachment = document.querySelector('input[id=attachments]');
 
-        const pond = FilePond.create(attachment);
+        Dropzone.autoDiscover = false;
 
-        FilePond.setOptions({
-            server: {
-                url: '/filepond/api',
-                process: '/process',
-                revert: '/process',
-                patch: "?patch=",
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                }
-            },
-
-            lang: 'fr_FR'
+        let myDropzone = new Dropzone(".dropzone", {
+            autoProcessQueue: false,
+            maxFilesize: 1,
+            acceptedFiles: ".jpeg,.jpg,.png,.gif"
         });
+
+        $('.add-lesson').click(function(){
+            myDropzone.processQueue();
+        });
+
     </script>
 
 
@@ -100,17 +92,20 @@
                 @enderror
             </div>
 
-            <div class="mb-5">
-                <label for="attachments" class="form-label">Attachments</label>
-                <input type="file" id="attachments" multiple>
-            </div>
 
-            <button type="submit" class="btn btn-primary w-100">Ajouter Leçon</button>
+
+
+
+            <button type="submit" class="btn btn-primary w-100 add-lesson">Ajouter Leçon</button>
 
         </form>
 
-
-
+        <div class="mb-5">
+            <label for="attachments" class="form-label">Attachments</label>
+            <form action="{{route('lessons.upload')}}" class="dropzone" id="my-dropzone">
+                @csrf
+            </form>
+        </div>
 
     </div>
 

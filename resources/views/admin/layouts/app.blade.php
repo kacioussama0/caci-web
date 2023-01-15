@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="{{asset('css/admin.rtl.css')}}">
     <link rel="stylesheet" href="{{asset('css/admin.css')}}">
     <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}">
+    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
     <!-- End Links Tags  -->
 
     @yield('styles')
@@ -69,6 +70,5 @@
 
     <!-- End Content -->
 
-@yield('scripts')
 
 @include('admin.layouts.footer')

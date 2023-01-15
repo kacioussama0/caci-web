@@ -92,4 +92,17 @@ class LessonController extends Controller
             ['success' => 'Leçon supprimer avec succès']
         );
     }
+
+
+    public function upload(Request $request) {
+        if($request->hasFile('file')) {
+            $file = $request->file('file');
+            $fileName = $file -> getClientOriginalName();
+            $path = $file->storeAs('public/attachments',$fileName);
+        }
+
+        if($path) {
+            return response()->json(['success' => 'uploaded successfully'],200);
+        }
+    }
 }

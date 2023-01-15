@@ -23,5 +23,6 @@ Route::prefix('admin')->group(function () {
     Route::resource('semesters',\App\Http\Controllers\SemesterController::class);
     Route::resource('modules',\App\Http\Controllers\ModuleController::class);
     Route::resource('lessons',\App\Http\Controllers\LessonController::class);
+    Route::post('lessons/upload',[\App\Http\Controllers\LessonController::class,'upload'])->name('lessons.upload');
     Route::resource('exercices',\App\Http\Controllers\ExerciceController::class);
 })->middleware(['auth']);
