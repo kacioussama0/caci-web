@@ -5,7 +5,7 @@
 @section('content')
 
 
-    <div class="landing-page  py-md-5">
+    <div class="landing-page py-md-5">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-5 text-md-start vstack gap-3 justify-content-center text-center order-last order-md-first">
@@ -38,7 +38,7 @@
                             <div class="rounded-circle bg-primary-subtle text-primary p-4">
                                 <i class="fa fa-paperclip fa-3x"></i>
                             </div>
-                            <h4 >Semestres</h4>
+                            <h4>Semestres</h4>
                             <p class="text-muted text-center">Chaque Semestre contient des modules</p>
                         </div>
                     </div>

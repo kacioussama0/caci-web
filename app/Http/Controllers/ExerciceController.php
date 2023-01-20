@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Exercice;
+use App\Models\Module;
 use Illuminate\Http\Request;
 
 class ExerciceController extends Controller
@@ -22,49 +23,28 @@ class ExerciceController extends Controller
 
     public function create()
     {
-        //
+        $modules = Module::all();
+        return view('admin.exercices.create',compact('modules'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Exercice  $exercice
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Exercice $exercice)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Exercice  $exercice
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(Exercice $exercice)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Exercice  $exercice
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Exercice $exercice)
     {
         //

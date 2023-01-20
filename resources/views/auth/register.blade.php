@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title',"S'inscrire")
 @section('content')
 <div class="container vh-100 position-relative">
     <h1 class="text-center my-5 p-3 text-primary">{{ __('S\'inscrire') }}</h1>

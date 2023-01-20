@@ -14,7 +14,7 @@
         <div class="sidebar-menu">
 
             <ul class="menu">
-                <li class="sidebar-title">List</li>
+
 
                 <li
                     class="sidebar-item {{request()->is('admin/profile') ? "active" : '' }}">

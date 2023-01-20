@@ -61,12 +61,17 @@
             </div>
 
             <div class="mb-3">
-                <label for="module" class="form-label">Module</label>
+                <label for="module" class="form-label">Leçons</label>
 
                 <select name="module" id="module" class="form-select">
-                    <option value="" selected disabled>Selectioner Module</option>
+                    <option value="" selected disabled>Selectioner Leçon</option>
                     @foreach($modules as $module)
-                        <option value="{{$module->id}}">{{$module->title}}</option>
+                            <option value="{{$module->id}}" disabled class="fw-bold fs-5 text-black border-bottom">{{$module->title}}</option>
+                    <ol>
+                        @foreach($module -> lessons as $lesson)
+                            <li><option value="{{$lesson->id}}" class="fw-light">{{$lesson->title}}</option></li>
+                        @endforeach
+                    </ol>
                     @endforeach
                 </select>
 
