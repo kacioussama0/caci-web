@@ -3,14 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Models\File;
+use App\Models\TemporaryFile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class FileController extends Controller
 {
     public function uploadMultiple(Request $request) {
-       dd($request->files);
+
+        if($request->hasFile('attachments')) {
+            $attachment =  $request -> file('attachments');
+            $file_name =   $attachment -> getClientOriginalName();
+            $folder = uniqid('',true);
+            $attachment->storeAs('attachments/tmp/' . $folder , $file_name);
+
+            TemporaryFile::create([
+                'folder' => $folder,
+                'file' => $file_name
+            ]);
+
+            return $folder;
+        }
+
+        return '';
+
     }
 
+
+    public function  delete() {
+        $tmpFile = TemporaryFile::where('folder',request()->getContent())->first();
+        Storage::deleteDirectory('attachments/tmp/' . $tmpFile -> folder);
+        $tmpFile -> delete();
+    }
 
 
     /**

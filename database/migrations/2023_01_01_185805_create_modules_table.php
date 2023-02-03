@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('modules', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('slug');
             $table->text('description')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')
@@ -26,6 +27,9 @@ return new class extends Migration
             $table->foreign('semester_id')->references('id')
                 ->on('semesters');
             $table->timestamps();
+            $table->unsignedBigInteger('teacher')->nullable();
+            $table->foreign('teacher')->references('id')
+                ->on('users');
             $table->softDeletes();
         });
     }

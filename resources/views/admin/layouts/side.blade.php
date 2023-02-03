@@ -32,6 +32,8 @@
                     </a>
                 </li>
 
+                @role('super_admin|moderator')
+
                 <li
                     class="sidebar-item {{request()->is('admin/semesters*') ? "active" : '' }}">
                     <a href="{{route('semesters.index')}}" class='sidebar-link'>
@@ -39,6 +41,8 @@
                         <span>Semestres</span>
                     </a>
                 </li>
+
+                @endrole
 
                 <li
                     class="sidebar-item {{request()->is('admin/modules*') ? "active" : '' }}">

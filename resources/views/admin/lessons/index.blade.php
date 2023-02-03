@@ -36,6 +36,7 @@
                         <td>{{$lesson->updated_at}}</td>
                         <td>
                             <div class="d-flex justify-content-center align-items-center">
+                                <a href="{{route('lessons.show',$lesson)}}" class="btn btn-primary me-2">Afficher</a>
                                 <a href="{{route('lessons.edit',$lesson)}}" class="btn btn-success me-2">Editer</a>
                                 <form id="destroy-form" action="{{route('lessons.destroy',$lesson)}}" method="POST" onsubmit="return confirm('Tu es Sur ?')">
                                     @csrf

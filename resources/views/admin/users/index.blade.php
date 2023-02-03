@@ -7,9 +7,10 @@
 @section('content')
 
 
+    @role('super_admin')
         <a href="{{route('users.create')}}" class="btn btn-lg btn-primary mb-4">Ajouter Utilisateur</a>
 
-
+    @endrole
 
 
 
@@ -23,7 +24,9 @@
                     <th>Image</th>
                     <th>Type</th>
                     <th>Crée</th>
+                    @role('super_admin')
                     <th>Procedures</th>
+                    @endrole
                 </tr>
 
             </x-slot>
@@ -37,12 +40,13 @@
                         <td>{{$user -> name}}</td>
                         <td>{{$user -> email}}</td>
                         <td>
-                            <img src="{{File::exists(public_path('storage/' . $user->avatar)) ?
+                            <img src="{{File::exists('storage/' . $user->avatar) ?
                             asset('storage/' . $user -> avatar) : asset('imgs/logo.svg')}}" alt="" style="width: 80px ; height:80px" class="rounded-circle">
                         </td>
 
-                        <td>{{$user -> type}}</td>
+                        <td>{{$user -> roles[0] -> display_name}}</td>
                         <td>{{$user -> created_at}}</td>
+                        @role('super_admin')
                         <td>
                             <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                 {{__('forms.procedures')}}
@@ -61,6 +65,7 @@
 
                             </ul>
                         </td>
+                        @endrole
                     </tr>
 
                 @endforeach

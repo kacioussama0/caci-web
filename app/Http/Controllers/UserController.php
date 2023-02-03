@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,30 +14,21 @@ class UserController extends Controller
 {
 
     public function  __construct() {
-        return $this->middleware('auth');
+             $this->middleware(['role:super_admin'])->only(['create','store','edit','update','destroy']);
+             $this->middleware(['role:super_admin|moderator|teacher'])->only('index');
     }
 
 
     public function index()
     {
-        if(auth()->user()->type == 'Super Admin') {
-
             $users = User::where('id', '<>', Auth::id())->paginate(5);
             return view('admin.users.index',compact('users'));
-        }
-        return abort(404);
     }
 
 
     public function create()
     {
-        if(auth()->user()->type == 'Super Admin') {
-
             return view('admin.users.create');
-
-        }
-        return abort(404);
-
     }
 
 
@@ -50,7 +42,6 @@ class UserController extends Controller
             'type' => 'required'
         ]);
 
-        if(auth()->user()->type == 'Super Admin') {
             $user = User::create([
                 'name' => $request -> name,
                 'email' => $request -> email,
@@ -58,11 +49,11 @@ class UserController extends Controller
                 'approved' => $request -> approved ? 1 : 0,
                 'type' => $request->type
             ]);
+
             return  redirect()->to('admin/users')->with(
                 ['success' => 'Utilisateur ajouté avec succès']
             );
 
-        }
 
 
     }
@@ -73,7 +64,8 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        return view('admin.users.edit',compact('user'));
+        $roles = Role::all();
+        return view('admin.users.edit',compact('user','roles'));
     }
 
 
@@ -85,19 +77,24 @@ class UserController extends Controller
             'type' => 'required'
         ]);
 
-        if(auth()->user()->type == 'super_admin') {
 
 
-            $user = User::where('id', $id)->update([
+            $user = User::find($id);
+
+            $user->update([
                 'name' => $request->name,
                 'email' => $request->email,
             ]);
+
+
+            $user -> detachRole($user -> roles[0]);
+            $user -> attachRole(Role::where('name' , $request->type)->first());
 
             return redirect()->to('admin/users')->with(
                 ['success' => __('forms.edit-success')]
             );
 
-        }
+
     }
 
 

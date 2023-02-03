@@ -56,7 +56,10 @@
 
             </x-slot>
 
+
         </x-forms.table>
+
+        {{$modules->links()}}
 
     </div>
 

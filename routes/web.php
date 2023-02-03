@@ -7,14 +7,18 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/',[\App\Http\Controllers\SiteController::class,'index']);
-Route::get('modules/{title}',[\App\Http\Controllers\SiteController::class,'module']);
-Route::get('modules/{title}/{lesson}',[\App\Http\Controllers\SiteController::class,'lesson']);
-Route::post('/uploadAttachment',[\App\Http\Controllers\FileController::class,'uploadMultiple']);
+Route::get('modules/{module}/{lesson?}',[\App\Http\Controllers\SiteController::class,'module']);
+Route::get('books',[\App\Http\Controllers\BookController::class,'books']);
+Route::get('modules',[\App\Http\Controllers\SiteController::class,'modules']);
+//  Route::get('modules/{title}/{lesson}',[\App\Http\Controllers\SiteController::class,'lesson']);
+Route::post('/tmp-upload',[\App\Http\Controllers\FileController::class,'uploadMultiple']);
+Route::delete('/tmp-remove',[\App\Http\Controllers\FileController::class,'delete']);
 Auth::routes();
-
+Route::get('switch-mode',[\App\Http\Controllers\SiteController::class,'switchMode']);
 
 
 Route::prefix('admin')->group(function () {
+
     Route::get('profile',[\App\Http\Controllers\UserController::class,'profile'])->name('admin/profile');
     Route::post('updateProfile',[\App\Http\Controllers\UserController::class,'updateProfile'])->name('updateProfile');
     Route::post('updatePassword',[\App\Http\Controllers\UserController::class,'updatePassword'])->name('updatePassword');
@@ -25,4 +29,6 @@ Route::prefix('admin')->group(function () {
     Route::resource('lessons',\App\Http\Controllers\LessonController::class);
     Route::post('lessons/upload',[\App\Http\Controllers\LessonController::class,'upload'])->name('lessons.upload');
     Route::resource('exercices',\App\Http\Controllers\ExerciceController::class);
+    Route::resource('books',\App\Http\Controllers\BookController::class);
+
 })->middleware(['auth']);

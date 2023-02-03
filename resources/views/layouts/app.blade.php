@@ -2,7 +2,7 @@
     $semesters = \App\Models\Semester::all();
 @endphp
 <!doctype html>
-<html lang="fr">
+<html lang="fr" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -10,13 +10,18 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{config('app.name')}} |  @yield('title')</title>
     <link rel="icon" href="{{asset('imgs/logo.svg')}}">
+    <meta name="description" content="CACI WEB, vous trouvez des leçons, des exercices et tout ce qui est nouveau dans le développement Web">
+    <meta name="keywords" content="@foreach($semesters as $semester) @foreach($semester -> modules as $module){{$module -> title .  ','}}@endforeach @endforeach">
+    <meta name="author" content="Kaci Oussama">
     <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}">
     <link rel="stylesheet" href="{{asset('fontawesome/css/all.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/master.css')}}">
     @yield('styles')
 </head>
 
-<body>
+<body @if(session()->has('mode')) data-bs-theme="{{session()->get('mode')}}" @endif>
+
+@if(!request()->is('register'))
 
 <!-- Start Header -->
 
@@ -33,7 +38,7 @@
             <div class="collapse navbar-collapse" id="navbarColor01">
                 <ul class="navbar-nav mx-auto ">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Accueil</a>
+                        <a class="nav-link active" href="{{url('/')}}">Accueil</a>
                     </li>
 
 
@@ -43,8 +48,7 @@
                             @foreach($semesters as $semester)
                                 <a class="dropdown-item user-select-none fs-5 fw-bolder text-uppercase" >{{$semester->title}}</a>
                                 @foreach($semester->modules as $key => $module)
-                                    <a class="dropdown-item" href="{{url('modules/' . $module->title)}}">{{$key+1 . ' - ' .$module->title}}</a>
-
+                                    <a class="dropdown-item" href="{{url('modules/' . $module->slug)}}">{{$key+1 . ' - ' .$module->title}}</a>
                                 @endforeach
                             @endforeach
 
@@ -52,11 +56,11 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Modules</a>
+                        <a class="nav-link active" href="{{url('modules')}}">Modules</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Tutorials</a>
+                        <a class="nav-link active" href="{{url('books')}}">Livres</a>
                     </li>
 
             </div>
@@ -90,6 +94,25 @@
 
             @endauth
 
+            <ul class="navbar-nav   ms-3 d-none d-lg-block">
+                <li class="nav-item dropdown">
+                    <a class="nav-link  dropdown-toggle  btn btn-outline-dark    rounded-3 border-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        @if(session()->get('mode') == 'light' || session()->has('mode'))
+                            <i class="fa-light fa-moon me-1"></i>Dark
+                        @else
+                            <i class="fa-light fa-moon me-1"></i>Light
+                        @endif
+                    </a>
+                    <div class="dropdown-menu">
+                        @if(session()->get('mode') == 'light' || session()->has('mode'))
+                            <a class="dropdown-item" href="{{url('switch-mode')}}">Light</a>
+                        @else
+                            <a class="dropdown-item" href="{{url('switch-mode')}}" >Dark</a>
+                        @endif
+                    </div>
+                </li>
+            </ul>
+
         </div>
     </nav>
 
@@ -98,8 +121,12 @@
 
 <!-- End Header -->
 
+
+@endif
+
 @yield('content')
 
+@if(!request()->is('register'))
 
 <footer class="bg-primary py-4">
 
@@ -121,7 +148,7 @@
 
 
 </footer>
-
+@endif
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>

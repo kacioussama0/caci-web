@@ -17,6 +17,7 @@
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.1",
         "livewire/livewire": "^2.10",
+        "santigarcor/laratrust": "^7.1",
         "sopamo/laravel-filepond": "^1.1"
     },
     "require-dev": {

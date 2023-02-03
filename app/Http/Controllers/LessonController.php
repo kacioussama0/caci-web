@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\File;
 use App\Models\Lesson;
 use App\Models\Module;
+use App\Models\TemporaryFile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class LessonController extends Controller
 {
@@ -12,11 +16,9 @@ class LessonController extends Controller
     public function index()
     {
         $lessons = Lesson::latest()->get();
-
         return view('admin.lessons.index',compact('lessons'));
 
     }
-
 
     public function create()
     {
@@ -25,32 +27,49 @@ class LessonController extends Controller
     }
 
 
-
     public function store(Request $request)
     {
+
+
         $request->validate([
             'title' => 'required',
             'content' => 'required',
             'module' => 'required|integer'
         ]);
 
-        Lesson::create([
+        $lesson = Lesson::create([
             'title' => $request->title,
+            'slug' => Str::slug($request->title,'-'),
             'content' => $request['content'],
             'user_id' => auth()->id(),
             'module_id' => $request->module
         ]);
 
+
+
+        $tmpFile = TemporaryFile::where('folder',$request->attachments)->first();
+
+        if($tmpFile) {
+            Storage::copy('attachments/tmp/' . $tmpFile ->folder . '/' . $tmpFile -> file ,'public/attachments/' . $tmpFile ->folder . '/' . $tmpFile -> file);
+            File::create([
+                'lesson_id' => $lesson -> id,
+                'path' => $tmpFile->folder  . '/' . $tmpFile -> file,
+            ]);
+            Storage::delete('attachments/tmp' . $tmpFile -> folder);
+            $tmpFile -> delete();
+        }
+
         return redirect()->to('admin/lessons')->with(
             ['success' => 'Leçon ajouter avec succès']
         );
+
 
     }
 
 
     public function show(Lesson $lesson)
     {
-        //
+        return view('lesson',compact('lesson'));
     }
 
 

@@ -9,6 +9,12 @@ use Illuminate\Support\Str;
 class SemesterController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware(['role:super_admin'])->only(['create','store','edit','update','destroy']);
+        $this->middleware(['role:super_admin|moderator'])->only('index');
+    }
+
 
     public function index()
     {
@@ -26,8 +32,10 @@ class SemesterController extends Controller
             'title' => 'required',
         ]);
 
+
         Semester::create([
             'title' => Str::ucfirst($request->title),
+            'slug' => Str::slug($request->title,"-"),
             'user_id' => auth()->id()
         ]);
 

@@ -36,19 +36,23 @@
 
 
     <script>
+        // Get a reference to the file input element
+        const inputElement = document.querySelector('#attachments');
 
-        Dropzone.autoDiscover = false;
+        // Create a FilePond instance
+        const pond = FilePond.create(inputElement);
 
-        let myDropzone = new Dropzone(".dropzone", {
-            autoProcessQueue: false,
-            maxFilesize: 1,
-            acceptedFiles: ".jpeg,.jpg,.png,.gif"
+
+        FilePond.setOptions({
+            name: 'attachments',
+            server: {
+                process: '/tmp-upload',
+                revert: '/tmp-remove',
+                headers: {
+                    'X-CSRF-TOKEN': '{{csrf_token()}}'
+                }
+            }
         });
-
-        $('.add-lesson').click(function(){
-            myDropzone.processQueue();
-        });
-
     </script>
 
 
@@ -93,6 +97,10 @@
             </div>
 
 
+            <div class="mb-5">
+                <label for="attachments" class="form-label">Attachments</label>
+                <input type="file" id="attachments" multiple name="attachments[]"/>
+            </div>
 
 
 
@@ -100,15 +108,11 @@
 
         </form>
 
-        <div class="mb-5">
-            <label for="attachments" class="form-label">Attachments</label>
-            <form action="{{route('lessons.upload')}}" class="dropzone" id="my-dropzone">
-                @csrf
-            </form>
-        </div>
 
     </div>
 
 @endsection
+
+
 
 

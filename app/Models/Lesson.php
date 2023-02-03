@@ -13,6 +13,7 @@ class Lesson extends Model
 
     protected $fillable = [
         'title',
+        'slug',
         'content',
         'user_id',
         'module_id'
@@ -24,6 +25,10 @@ class Lesson extends Model
 
     public function comments() {
         return $this->hasMany(Comment::class);
+    }
+
+    public function files() {
+        return $this -> hasMany(File::class);
     }
 
     public function module() {

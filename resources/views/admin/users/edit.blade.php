@@ -32,9 +32,9 @@
         <div class="mb-3">
             <label for="type">Type</label>
             <select name="type" id="type" class="form-select">
-                <option value="Moderator" @if($user->type == 'Moderator') selected @endif>Moderator</option>
-                <option value="Teacher" @if($user->type == 'Teacher') selected @endif>Enseignant</option>
-                <option value="Student" @if($user->type == 'Student') selected @endif>Elève</option>
+                @foreach($roles as $role)
+                    <option value="{{$role -> name}}">{{$role-> display_name}}</option>
+                @endforeach
             </select>
             @error('type')
             <span class="text-danger">{{$message}}</span>

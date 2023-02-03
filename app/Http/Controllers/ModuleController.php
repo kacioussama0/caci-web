@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Module;
 use App\Models\Semester;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\File;
 
 class ModuleController extends Controller
@@ -14,7 +15,7 @@ class ModuleController extends Controller
     public function index()
     {
         if(count(Semester::all())) {
-            $modules = Module::latest()->get();
+            $modules = Module::latest()->paginate(5);
             return view('admin.modules.index',compact('modules'));
         }
         return redirect()->to('admin/semesters');
@@ -44,6 +45,7 @@ class ModuleController extends Controller
         Module::create([
 
             'title' => $request->title,
+            'slug' => Str::slug($request->title,'-'),
             'description' => $request->description,
             'coefficient' => $request->coefficient,
             'thumbnail' => $thumbnail,

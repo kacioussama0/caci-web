@@ -18,6 +18,32 @@
                 <h1 class="mb-3">{{$lesson->title}}</h1>
 
                 {!! $lesson->content !!}
+
+                <h3>Attachments</h3>
+
+
+
+                <x-forms.table :object="$lesson->files">
+
+                    <x-slot name="thead">
+
+                        <th>Fichier</th>
+                        <th>Action</th>
+
+                    </x-slot>
+
+                    <x-slot name="tbody">
+                        @foreach($lesson->files as $file)
+                            <tr>
+                               <td>{{explode('/',$file->path)[1]}}</td>
+                                <th><a href="{{asset('storage/attachments/' . $file -> path)}}" download class="btn btn-primary">Telecharger</a></th>
+                            </tr>
+                        @endforeach
+                    </x-slot>
+
+
+                </x-forms.table>
+
             </div>
 
             <div class="col-md-4">
@@ -41,8 +67,9 @@
                     @endforeach
 
                 </div>
-
             </div>
+
+
 
 
             <div class="col-md-8">
