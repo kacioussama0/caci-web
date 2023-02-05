@@ -124,4 +124,13 @@ class LessonController extends Controller
             return response()->json(['success' => 'uploaded successfully'],200);
         }
     }
+
+    public function uploadImage(Request $request) {
+
+        if($request -> hasFile('upload')) {
+            $image = $request->file('upload')->store('images','public');
+            return response()->json(['filename' => $image , 'uploaded' => 1 , 'url' => asset('storage/' . $image)]);
+        }
+
+    }
 }

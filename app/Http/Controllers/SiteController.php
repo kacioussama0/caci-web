@@ -10,10 +10,7 @@ use Illuminate\Http\Request;
 class SiteController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware(['auth'])->except('index');
-    }
+
 
     public function index() {
         $semesters = Semester::all();
@@ -23,15 +20,15 @@ class SiteController extends Controller
         ->with('lessons',$lessons);
     }
 
-    public function module($module,$lesson = '') {
+    public function module($module) {
 
         $module = Module::where('slug',$module)->first();
-        $leson = $module->lessons->first();
-        if(!empty($lesson)) {
-            $lesson = Lesson::where('slug',$lesson)->first();
+
+        if(empty($module)) {
+            return  redirect()->to('modules');
         }
 
-        return view('module',compact('module','lesson'));
+        return view('module',compact('module'));
 
     }
 

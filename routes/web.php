@@ -5,17 +5,17 @@ use Illuminate\Support\Facades\Route;
 
 
 
-
+Route::view('test','layouts.header');
 Route::get('/',[\App\Http\Controllers\SiteController::class,'index']);
-Route::get('modules/{module}/{lesson?}',[\App\Http\Controllers\SiteController::class,'module']);
+Route::get('modules/{module}/{lesson?}',[\App\Http\Controllers\SiteController::class,'lesson']);
+Route::get('module/{module}',[\App\Http\Controllers\SiteController::class,'module']);
 Route::get('books',[\App\Http\Controllers\BookController::class,'books']);
 Route::get('modules',[\App\Http\Controllers\SiteController::class,'modules']);
 //  Route::get('modules/{title}/{lesson}',[\App\Http\Controllers\SiteController::class,'lesson']);
 Route::post('/tmp-upload',[\App\Http\Controllers\FileController::class,'uploadMultiple']);
 Route::delete('/tmp-remove',[\App\Http\Controllers\FileController::class,'delete']);
 Auth::routes();
-Route::get('switch-mode',[\App\Http\Controllers\SiteController::class,'switchMode']);
-
+Route::post('ckupload',[\App\Http\Controllers\LessonController::class,'uploadImage'])->name('ckeditor.uploadImage');
 
 Route::prefix('admin')->group(function () {
 

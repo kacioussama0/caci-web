@@ -3,32 +3,79 @@
 
 @section('content')
 
-<section class="module">
+<!--==========================-->
+<!--=         Banner         =-->
+<!--==========================-->
+<section class="page-banner style-light">
 
-    <div class="header mb-3  d-flex flex-column justify-content-center align-items-center position-relative" >
-        <h1 class="display-4 text-center text-white bg-opacity-50">Modules</h1>
+
+    <ul class="banner-pertical-two">
+        <li><img src="{{asset('media/banner/header2/tree.png')}}" class="littleSquare" alt="astriol pertical"></li>
+        <li><img src="{{asset('media/banner/header2/wave.png')}}" alt="astriol pertical"></li>
+        <li><img src="{{asset('media/banner/header2/bigc.png')}}" alt="astriol pertical"></li>
+        <li><img src="{{asset('media/banner/header2/dot.png')}}" alt="astriol pertical"></li>
+        <li><img src="{{asset('media/banner/header2/c1.png')}}" alt="astriol pertical"></li>
+        <li><img src="{{asset('media/banner/header2/dotsm.png')}}" alt="astriol pertical"></li>
+        <li><img src="{{asset('media/banner/header2/c2.png')}}" alt="astriol pertical"></li>
+        <li><img src="{{asset('media/banner/header2/hc1.png')}}" alt="astriol pertical"></li>
+        <li><img src="{{asset('media/banner/header2/hc2.png')}}" alt="astriol pertical"></li>
+    </ul>
+    <!-- /.banner-pertical -->
+
+    <div class="page-title-wrapper text-center">
+        <h1 class="page-title">Modules</h1>
     </div>
-
-    <div class="container mb-5">
-        <div class="row g-5">
-            @foreach($modules as $module)
-                <div class="col-md-4">
-
-                    <div class="card shadow border-0">
-                        <div class="card-body vstack gap-3 align-items-center">
-                            <img src="{{asset('storage/' . $module -> thumbnail)}}" alt="{{$module->title}}" class="img-fluid" style="height: 250px">
-                            <h4>{{$module->title}}</h4>
-                            <div>
-                                <span class="badge-pill badge bg-dark">Leçons {{count($module->lessons)}}</span>
-                            </div>
-                            <a href="{{url('modules/' . $module->slug)}}" class="stretched-link"></a>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </div>
+    <!-- /.page-title-wrapper -->
 
 </section>
+<!-- /.page-banner -->
+
+<!--========================-->
+<!--=         Blog         =-->
+<!--========================-->
+<section class="blog-posts">
+    <div class="container">
+        <div class="astriol__blogs wow fadeIn" data-wow-delay="0.3s">
+            <div class="col-md-12">
+                <div class="row">
+                @foreach($modules as $module)
+                    <div class="col-md-4">
+                        <div class="astriol__blog-post p-3" style="min-height: 450px">
+                            <div class="post-thumbnail">
+                                <a href="{{url('module/' . $module->slug)}}">
+                                    <img src="{{asset('storage/' . $module -> thumbnail)}}" alt="{{$module->title}}" class="img-fluid d-block  mx-auto" style="height: 200px">
+                                </a>
+                            </div>
+                            <!-- /.post-thumbnail -->
+
+                            <div class="entry-content">
+                                <a href="#" class="entry-meta">{{$module->semester->title}}</a>
+
+                                <h2 class="entry-title"><a href="{{url('module/' . $module->slug)}}">{{$module->title}}</a></h2>
+
+                                <div class="blog-footer">
+                                    <div class="date-meta">
+                                        {{count($module->lessons)}} Lecons
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.blog-content -->
+                        </div>
+                        <!-- /.astriol__blog-post -->
+                    </div>
+
+
+                @endforeach
+
+
+
+
+                </div>
+            </div>
+            <!-- /.container -->
+</section>
+<!-- /.portfolios -->
+
+
 
 @endsection

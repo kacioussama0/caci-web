@@ -3,90 +3,80 @@
 
 @section('content')
 
-<section class="module">
 
-    <div class="header mb-3  d-flex flex-column justify-content-center align-items-center position-relative" style="background-image: url('{{asset('storage/' . $module->thumbnail)}}')">
-        <h1 class="display-4 text-center text-white bg-opacity-50">{{$module->title}}</h1>
-        <p class="container text-white text-center">{{$module->description}}</p>
-    </div>
-@if(count($module->lessons))
-    <div class="container mb-5">
+    <!--==========================-->
+    <!--=         Banner         =-->
+    <!--==========================-->
+    <section class="page-banner style-light">
 
-        <div class="row">
+        <ul class="banner-pertical-two">
+            <li><img src="{{asset('media/banner/header2/tree.png')}}" class="littleSquare" alt="astriol pertical"></li>
+            <li><img src="{{asset('media/banner/header2/wave.png')}}" alt="astriol pertical"></li>
+            <li><img src="{{asset('media/banner/header2/bigc.png')}}" alt="astriol pertical"></li>
+            <li><img src="{{asset('media/banner/header2/dot.png')}}" alt="astriol pertical"></li>
+            <li><img src="{{asset('media/banner/header2/c1.png')}}" alt="astriol pertical"></li>
+            <li><img src="{{asset('media/banner/header2/dotsm.png')}}" alt="astriol pertical"></li>
+            <li><img src="{{asset('media/banner/header2/c2.png')}}" alt="astriol pertical"></li>
+            <li><img src="{{asset('media/banner/header2/hc1.png')}}" alt="astriol pertical"></li>
+            <li><img src="{{asset('media/banner/header2/hc2.png')}}" alt="astriol pertical"></li>
+        </ul>
+        <!-- /.banner-pertical -->
 
-            <div class="col-md-3">
-
-                <div class="offcanvas-lg offcanvas-start">
-                    <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                    </div>
-                    <div class="offcanvas-body">
-                        <nav class="bd-links w-100" id="bd-docs-nav" aria-label="Docs navigation">
-                            <h3 class="fw-bold mb-3">Cours</h3>
-                            <ul class="bd-links-nav list-unstyled mb-0 pb-3 pb-md-2 pe-lg-2">
-                                @foreach($module->lessons as $lesson)
-                                    <li class="btn btn-outline-primary position-relative   @if(request()->is('modules/' . $module->slug . '/' . $lesson -> slug)) active fw-bold @endif mb-3">
-                                        @if(request()->is('modules/' . $module->slug . '/' . $lesson -> slug))   <span class="bg-warning d-block rounded-circle position-absolute start-0 top-0 translate-middle" style="width: 15px ; height: 15px"></span> @endif
-                                        <a href="{{url('modules/' . $module->slug . '/' . $lesson -> slug)}}" class="   text-decoration-none text-black ">{{$lesson->title}}</a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-
-            </div>
-
-
-            <div class="row col-md-9">
-
-                <h1 class="my-5">{{$lesson->title}}</h1>
-
-                <div class="content w-100">
-                    {!! $lesson->content !!}
-                </div>
-
-                <h3>Attachments</h3>
-
-
-
-                <x-forms.table :object="$lesson->files">
-
-                    <x-slot name="thead">
-                        <th>Fichier</th>
-                        <th>Action</th>
-                    </x-slot>
-
-                    <x-slot name="tbody">
-                        @foreach($lesson->files as $file)
-                            <tr>
-                                <td>{{explode('/',$file->path)[1]}}</td>
-                                <th><a href="{{asset('storage/attachments/' . $file -> path)}}" download class="btn btn-primary">Telecharger</a></th>
-                            </tr>
-                        @endforeach
-                    </x-slot>
-
-                </x-forms.table>
-
-            </div>
-
+        <div class="page-title-wrapper text-center">
+            <h1 class="page-title">{{$module->title}}</h1>
         </div>
+        <!-- /.page-title-wrapper -->
+
+    </section>
+    <!-- /.page-banner -->
+
+    <!--========================-->
+    <!--=         Blog         =-->
+    <!--========================-->
 
 
-        @else
+@if(count($module->lessons))
+    <section class="blog-posts">
+        <div class="container">
+            <div class="astriol__blogs wow fadeIn" data-wow-delay="0.3s">
+                <div class="col-md-12">
+                    <div class="row">
+                        @foreach($module->lessons as $lesson)
+                            <div class="col-md-4">
+                                <div class="astriol__blog-post p-3" style="min-height: 350px">
+                                    <div class="post-thumbnail">
+                                        <a href="{{url('modules/' . $module->slug . '/' . $lesson -> slug)}}">
+                                            <img src="{{asset('storage/' . $module -> thumbnail)}}" alt="{{$lesson->title}}" class="img-fluid d-block  mx-auto" style="height: 200px">
+                                        </a>
+                                    </div>
+                                    <!-- /.post-thumbnail -->
 
-            <div class="alert alert-danger container">
-                <h3 class="display-1 text-center">Vide</h3>
-            </div>
+                                    <div class="entry-content">
+                                        <h2 class="entry-title"><a href="{{url('modules/' . $module->slug . '/' . $lesson -> slug)}}">{{$lesson->title}}</a></h2>
+                                        <ul class="post-meta">
+                                            <li><a href="#">{{$lesson -> created_at}}</a></li>
+                                        </ul>
+                                    </div>
+                                    <!-- /.blog-content -->
+                                </div>
+                                <!-- /.astriol__blog-post -->
+                            </div>
 
-        @endif
+
+                        @endforeach
 
 
 
 
+                    </div>
+                </div>
+            </div>            <!-- /.container -->
+    </section>
+    <!-- /.portfolios -->
+@else
+    <div class="alert alert-danger container my-3">
+        <h1 class="display-1 text-center">Vide</h1>
     </div>
 
-</section>
-
+@endif
 @endsection
