@@ -11,6 +11,9 @@ class SiteController extends Controller
 {
 
 
+    public  function tools() {
+        return view('tools');
+    }
 
     public function index() {
         $semesters = Semester::all();

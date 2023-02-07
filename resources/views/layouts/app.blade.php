@@ -126,7 +126,7 @@
 
 
                             <li class=" menu-item-depth-0">
-                                <a href="index.html">Livres</a>
+                                <a href="{{url('tools')}}">Outils</a>
                             </li>
 
 

@@ -4,8 +4,8 @@ use Illuminate\Support\Facades\Route;
 
 
 
-
-Route::view('test','layouts.header');
+Route::view('tools/ipv4-calculator','tools.ipv4');
+Route::get('tools',[\App\Http\Controllers\SiteController::class,'tools']);
 Route::get('/',[\App\Http\Controllers\SiteController::class,'index']);
 Route::get('modules/{module}/{lesson?}',[\App\Http\Controllers\SiteController::class,'lesson']);
 Route::get('module/{module}',[\App\Http\Controllers\SiteController::class,'module']);
