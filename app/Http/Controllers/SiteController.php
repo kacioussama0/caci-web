@@ -25,7 +25,7 @@ class SiteController extends Controller
 
     public function module($module) {
 
-        $module = Module::where('slug',$module)->first();
+        $module = Module::where('slug',$module)->where('module_id',$module->id)>first();
 
         if(empty($module)) {
             return  redirect()->to('modules');
