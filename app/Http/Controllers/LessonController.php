@@ -92,6 +92,7 @@ class LessonController extends Controller
 
         $lesson->update([
             'title' => $request->title,
+             'slug' => Str::slug($request->title,'-'),
             'content' => $request['content'],
             'module_id' => $request->module
         ]);
